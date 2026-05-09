@@ -14,6 +14,9 @@ const addSchool= async(req,res)=>{
         );
         res.status(201).json({message:'School added successfully'});
     }catch(e){
+        if (e.code === "ER_DUP_ENTRY") {
+            return res.status(409).json({ error: "School already exists in the database" });
+        }
         console.error('Error adding school:', e);
         res.status(500).json({error:'Failed to add school'});
     }
